@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class UserController {
     @GetMapping("/{id}")
     public Mono<ResponseEntity<UserEntity>> getUserById(final Long id) {
         return userService.getUserById(id)
+                .filter(Objects::nonNull)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
