@@ -2,26 +2,31 @@ package com.github.study_webflux.controller;
 
 import com.github.study_webflux.entities.UserEntity;
 import com.github.study_webflux.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<UserEntity> createUser(@RequestBody final UserEntity userEntity) {
         return userService.createUser(userEntity);
     }
 
     @GetMapping("/{id}")
-    public Mono<UserEntity> getUserById(final Long id) {
-        return userService.getUserById(id);
+    public Mono<ResponseEntity<UserEntity>> getUserById(final Long id) {
+        return userService.getUserById(id)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/name/{username}")

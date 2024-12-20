@@ -1,11 +1,15 @@
 package com.github.study_webflux.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Objects;
 
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity {
 
     @Id
