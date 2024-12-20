@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: study-webflux
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 10MB
+      file-size-threshold: 0B
+  r2dbc:
+    username: root
+    password: root
+    url: r2dbc:postgresql://localhost:5432/postgres
+    pool:
+      initial-size: 5
+      max-size: 10
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: webflux-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3

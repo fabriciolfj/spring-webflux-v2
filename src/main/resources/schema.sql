@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS items (
 -- ALTER TABLE items ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY;
 
 -- Índices sugeridos
-CREATE INDEX idx_items_name ON items(name);
+CREATE INDEX IF NOT EXISTS idx_items_name ON items(name);
 
 -- Comentários na tabela e colunas (opcional, mas recomendado)
 COMMENT ON TABLE items IS 'Tabela que armazena informações sobre itens';
